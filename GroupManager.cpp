@@ -1,5 +1,6 @@
 #include "GroupManager.h"
 
+
 void GroupManager::printGroup(PGresult *_command, PGresult *res, int groupId) {
     int rows = PQntuples(res);
     std::cout << "Группа номер " << groupId << ":" << std::endl;
@@ -10,6 +11,7 @@ void GroupManager::printGroup(PGresult *_command, PGresult *res, int groupId) {
     }
 }
 
+// Снова функция получения данных не возвращает ничего, а выводит в поток
 void GroupManager::getGroup(int groupId) {
     std::vector<PGresult *> requests = SQLRequests::groupRequest(groupId);
     PGresult *res = requests[0];

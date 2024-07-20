@@ -28,6 +28,8 @@ PGresult *SQLCommands::executeQuery(PGconn *conn, const std::string &query) {
     return res;
 }
 
+// В функции создания лучше указать, что она делает "create" таблицы, а не просто "table"
+// group_name == год рождения, но год рожения у участника ограничен 15 символами, а название группы 255 символами
 void SQLCommands::tableGroups() {
     executeCommand(
             "CREATE TABLE IF NOT EXISTS groups ("
@@ -36,6 +38,8 @@ void SQLCommands::tableGroups() {
             ");");
 }
 
+// В функции создания лучше указать, что она делает "create" таблицы, а не просто "table"
+// Что делать с одинаковыми ФИО у участников?
 void SQLCommands::tableParticipants() {
     executeCommand(
             "CREATE TABLE IF NOT EXISTS participants ("
@@ -47,6 +51,7 @@ void SQLCommands::tableParticipants() {
             ");");
 }
 
+// В функции создания лучше указать, что она делает "create" таблицы, а не просто "table"
 void SQLCommands::tableParticipantGroups() {
     executeCommand(
             "CREATE TABLE IF NOT EXISTS participant_groups ("
@@ -57,6 +62,9 @@ void SQLCommands::tableParticipantGroups() {
     );
 }
 
+// В функции создания лучше указать, что она делает "create" таблицы, а не просто "table"
+// Если уже есть таблица участников, то зачем дублировать данные?
+// Почему не добавить певичный ключ на участника?
 void SQLCommands::tableResults() {
     executeCommand(
             "CREATE TABLE IF NOT EXISTS results ("
@@ -70,6 +78,7 @@ void SQLCommands::tableResults() {
             ");");
 }
 
+// В функции создания лучше указать, что она делает "create" таблицы, а не просто "table"
 void SQLCommands::tableUsers() {
     executeCommand(
             "CREATE TABLE IF NOT EXISTS users ("

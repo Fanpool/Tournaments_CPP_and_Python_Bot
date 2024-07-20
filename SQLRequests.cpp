@@ -13,7 +13,6 @@ PGresult *SQLRequests::SQLRequest(PGconn *conn, const char *command, int paramet
     return res;
 }
 
-
 std::vector<PGresult *> SQLRequests::groupRequest(int groupId){
     std::string groupIdStr = std::to_string(groupId);
     const char *paramValues[1] = {groupIdStr.c_str()};
@@ -32,6 +31,7 @@ std::vector<PGresult *> SQLRequests::groupRequest(int groupId){
     return requests;
 }
 
+// Лучше указать "get"
 PGresult * SQLRequests::uniqueYearsRequest(){
     PGresult *res = PQexec(Database::conn, "SELECT DISTINCT year_of_birth FROM participants ORDER BY year_of_birth");
     Database::checkError(res);

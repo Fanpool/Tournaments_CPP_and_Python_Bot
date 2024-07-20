@@ -34,7 +34,7 @@ void ParticipantManager::deleteParticipant(const std::string &firstName, const s
     }
 }
 
-
+// Функция получения выводит данные поток вывода
 void ParticipantManager::getParticipants() {
     PGresult *res = SQLRequests::getParticipantsRequest();
 

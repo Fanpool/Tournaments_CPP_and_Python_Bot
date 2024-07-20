@@ -49,25 +49,35 @@ void Database::checkError(PGresult *res) {
     }
 }
 
+
+// Для чего оборачивать часть фунций менеджеров в ДБ менеджер
+
+
+// Почему у участников нет собсвенного Id для однозначной идентификации?
+// Почему функция добавления участника не возвращает его/его Id?
 void
 Database::addParticipant(const std::string &firstName, const std::string &lastName, const std::string &year_of_birth) {
     ParticipantManager::addParticipant(firstName, lastName, year_of_birth);
 }
 
+// Вопросы как при удалении
 void Database::deleteParticipant(const std::string &firstName, const std::string &lastName,
                                  const std::string &year_of_birth) {
     ParticipantManager::deleteParticipant(firstName, lastName, year_of_birth);
 }
 
+// Почему функция получения списка участников возвращает ничего
 void Database::getParticipants() {
     ParticipantManager::getParticipants();
 }
 
+// Работа с участниками через фио уязвима к пользователям с одинаковыми данными
 void Database::addResult(const std::string &discipline, const std::string &firstName, const std::string &lastName,
                          const std::string &year_of_birth, int point) {
     ResultManager::addResult(discipline, firstName, lastName, year_of_birth, point);
 }
 
+// Работа с участниками через фио уязвима к пользователям с одинаковыми данными
 void Database::deleteResult(const std::string &discipline, const std::string &firstName, const std::string &lastName,
                             const std::string &year_of_birth) {
     ResultManager::deleteResult(discipline, firstName, lastName, year_of_birth);
@@ -77,14 +87,17 @@ void Database::sortParticipantsIntoGroups() {
     GroupManager::sortParticipantsIntoGroups();
 }
 
+// void для функции получения?
 void Database::getGroup(int groupId) {
     GroupManager::getGroup(groupId);
 }
+
 
 void Database::saveToCSV(const std::string &filename) {
     CSVManager::saveToCSV(filename);
 }
 
+// void для функции получения?
 void Database::getWinner() {
     ResultManager::getWinner();
 }

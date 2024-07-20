@@ -154,6 +154,7 @@ void ResultManager::deleteResult(const std::string &discipline, const std::strin
     }
 }
 
+// void при get функции
 void ResultManager::getWinner() {
     std::vector<std::string> disciplines = getDisciplines();
     auto results = SQLRequests::getResultsRequest();
@@ -166,6 +167,7 @@ void ResultManager::getWinner() {
     printResults(participantsByYear);
 }
 
+// а тут возвращает значение, а не принтит
 std::vector<std::string> ResultManager::getDisciplines() {
     PGresult *res = SQLRequests::getDisciplinesRequest();
 
