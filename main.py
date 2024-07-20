@@ -2,7 +2,15 @@ import telebot
 import subprocess
 from telebot import types
 
+
+# Во всем проекте где-то есть точки в текстах сообщений, а где-то нет
+# Лучше вообще вынести все тексты в отдельный модуль (перевод можно будет добавить)
+# Для настроек лучше создать отдельный файл с конфигами и не хранить данные в тексте, а использовать переменные окружения (.env)
+# Для удобства работы разрабов и для линтера можно использовать аннотацию типов
+
+
 bot = telebot.TeleBot('your TelegramAPI')
+
 
 admin_credentials = {
     'admin1': 'password1',
@@ -23,6 +31,9 @@ judge_registration = False
 team_leader_registration = False
 
 
+# Для удобства работы разрабов и для линтера можно использовать аннотацию типов:
+# def handle_start(message: types.Message)
+# Так будет проще ориентироваться что происходит в функциях и методах (что ожидается на вход и выход)
 @bot.message_handler(commands=['start'])
 def handle_start(message):
     bot.send_message(message.chat.id,
@@ -30,7 +41,8 @@ def handle_start(message):
                      reply_markup=role_markup())
 
 
-def translate_rus_to_eng(text):
+# trtranslate_rus_to_eng(text: str) -> str
+def translate_rus_to_eng(text) -> str:
     alphabet_eng = '0123456789ABCDEFGHIJKLMNOPQRSTUVW'
     alphabet_rus = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
 
@@ -86,6 +98,20 @@ def ask_login_admin(chat_id):
     bot.register_next_step_handler_by_chat_id(chat_id, ask_password)
 
 
+# Для простоты понимания работы функции лучше использовать не ветвление, а условие с выходом из функции
+#
+# if a is not None:
+#   ...
+#   return 1
+# else:
+#    return 2
+#
+# Можно заменить на:
+#
+# if a is None:
+#   return 2
+# ...
+# return 1
 def ask_password(message):
     login = message.text
     chat_id = message.chat.id
@@ -234,7 +260,11 @@ def CPP_backend(message, first_name, last_name, age, result, discipline, group_n
         error_message = f"Исключение при выполнении команды: {str(e)}"
         print(error_message)
 
-
+# 3 функции получения имени участника ниже одинаковые
+# В данном случае их будет корректней заменить одной функцией
+# Принцип DRY. Dont repeat yourself
+# Если это функция получения имени, то лучше будет в нее завенуть приглашалку ввести имя пользователя, а не писать это 10 раз подряд (выше)
+# А промежуточный шаг с сохранением и запросом дальшейшей инфы перенести в промежуточную ф-цию
 def admin_get_first_name(message, operation):
     first_name = message.text
     bot.send_message(message.chat.id, 'Введите фамилию участника')
@@ -268,6 +298,7 @@ def get_age(message, first_name, last_name, operation):
         bot.register_next_step_handler(message, get_discipline, first_name, last_name, age, operation)
 
 
+# Почему в функции получения дисциплины проверка на удаление??
 def get_discipline(message, first_name, last_name, age, operation):
     discipline = message.text
     if operation == 'deleteResult':
@@ -293,6 +324,7 @@ def confirm_clear_database(message, operation):
         bot.register_next_step_handler(message, confirm_clear_database, operation)
 
 
+# 3 одинаковые функции. DRY!!!
 def admin_get_group_number(message, operation):
     group_number = message.text
     CPP_backend(message, '', '', '', '', '', group_number, '', operation)
@@ -463,6 +495,8 @@ def handle_parent_action(message):
     elif message.text == 'К выбору роли':
         handle_start(message)
 
+
+# Для комментирования сути работы функции лучше использовать docstring
 
 # Обработка остальных сообщений
 @bot.message_handler(func=lambda message: True)
